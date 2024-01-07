@@ -1,0 +1,26 @@
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>NOTES</h4>
+      <h6>Add Notes</h6>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form id="notesForm" action="/submit-notes" method="post"> <!-- Specify the action and method -->
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="form-group">
+              <label for="notes">Note</label>
+              <textarea class="form-control" name="notes" id="notes" required></textarea>
+            </div>
+          </div>
+          <div class="col-lg-12">
+            <button type="submit" class="btn btn-submit me-2">Submit</button> <!-- Change type to submit -->
+            <a href="javascript:void(0);" class="btn btn-cancel">Cancel</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,162 @@
+
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Add Patients</h4>
+      <h6>Create new Patients details</h6>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form id="patientForm" action="/add-patients" method="POST" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group" id="patientPhotoContainer">
+            <label>Patient Photo</label>
+            <div id="photoInputContainer">
+              <input type="file" accept="image/*" id="patientPhotoInput" name="patientPhoto" onchange="previewPhoto()" />
+            </div>
+          </div>
+          <div id="photoPreview" style="max-width: 100%; max-height: 200px; overflow: hidden; display: none; margin-top: -16px;">
+            <img id="previewImage" style="width: 100%; height: auto;" alt="Patient Photo Preview" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label>Patient Name</label>
+              <input type="text" class="form-control" name="patientName">
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="form-group">
+              <label for="doctorId">Doctor Name</label>
+              <select class="form-control" name="doctorId" id="doctorId">
+                <option selected disabled>Select a Doctor</option>
+                <% doctor.forEach((doctor) => { %>
+                  <option value="<%= doctor._id %>"><%= doctor?.doctorName %></option>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+          
+        </div>
+        
+
+        <div class="col-lg-12">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Date Of Birth</label>
+                <input type="date" class="form-control" name="dateOfbirth">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Gender</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="male" name="gender" value="male">
+                  <label class="form-check-label" for="male">Male</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" id="female" name="gender" value="female">
+                  <label class="form-check-label" for="female">Female</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>Admit Date</label>
+                <input type="date" class="form-control" name="admitDate">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="form-group">
+                <label>OT Date</label>
+                <input type="date" class="form-control" name="otDate">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-12">
+          <button type="button" class="btn btn-submit me-2" onclick="submitForm()">Submit</button>
+          <a href="/product-list" class="btn btn-cancel">Cancel</a>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  async function submitForm() {
+  try {
+    const form = document.getElementById('patientForm');
+
+    const formData = new FormData(form);
+
+    const response = await fetch('/add-patients', {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (response.ok) {
+      console.log("Patient Details Successfully added");
+
+      window.location.reload();
+
+      // Handle success, e.g., redirect or display a success message
+    } else {
+      console.error('Error saving patient details:', await response.text());
+      // Handle error, e.g., display an error message to the user
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    // Handle other unexpected errors
+  }
+}
+
+
+function resetPhotoPreview() {
+  const photoPreview = document.getElementById('photoPreview');
+  const photoInputContainer = document.getElementById('photoInputContainer');
+  photoPreview.style.display = 'none';
+  photoInputContainer.style.display = 'block';
+}
+
+
+
+
+
+  function previewPhoto() {
+    const photoContainer = document.getElementById('patientPhotoContainer');
+    const inputContainer = document.getElementById('photoInputContainer');
+    const previewContainer = document.getElementById('photoPreview');
+
+    const fileInput = document.getElementById('patientPhotoInput');
+    const file = fileInput.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = function (e) {
+        // Update the preview image
+        const preview = document.getElementById('previewImage');
+        preview.src = e.target.result;
+
+        // Show the preview container and hide the input container
+        previewContainer.style.display = 'block';
+        inputContainer.style.display = 'none';
+      };
+
+      reader.readAsDataURL(file);
+    } else {
+      // Hide the preview container and show the input container
+      previewContainer.style.display = 'none';
+      inputContainer.style.display = 'block';
+    }
+  }
+</script>

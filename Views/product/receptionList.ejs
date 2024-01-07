@@ -1,0 +1,40 @@
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Receptionists</h4>
+      <h6>Manage your Receptionists</h6>
+    </div>
+  </div>
+
+  <!-- /product list -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datanew">
+          <thead>
+            <tr>
+              <th>S. No</th>
+              <th>Patient Name</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Gender</th>
+              <th>Qualification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% receptionist.forEach((reception, index) => {  %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td><%= reception.receptionistName %></td>
+              <td><%= reception.email %></td>
+              <td><%= reception.address %></td>
+              <td><%= reception.gender%></td>
+              <td><%= reception.qualification%></td>
+            </tr>
+            <% }); %> 
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

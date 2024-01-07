@@ -1,0 +1,148 @@
+<!-- Add this line to include Toastr library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
+<div class="content">
+  <div class="page-header">
+    <div class="row">
+      <div class="col">
+        <h3 class="page-title">Inbox</h3>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-12">
+      <div class="compose-btn">
+        <a href="javascript:void(0);" class="btn btn-primary btn-block w-100" id="bulkMailButton" onclick="toggleMailForms()">
+          Bulk Mail
+        </a>
+        
+      </div>
+      <ul class="inbox-menu">
+        <li>
+          <a href="javascript:void(0);"
+            ><i class="far fa-paper-plane"></i> All Mail</a
+          >
+        </li>
+        <li>
+          <a href="javascript:void(0);"
+            ><i class="far fa-file-alt"></i> Drafts
+            <span class="mail-count">(13)</span></a
+          >
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-lg-9 col-md-12">
+      <div class="card bg-white">
+        <div class="card-body" id="bulkMailForm" style="display: none;">
+          <form id="emailForm" action="/send-bulk-mail" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="recipientList" class="form-label">Recipient List (comma-separated email addresses):</label>
+              <input type="text" class="form-control" name="recipientList" id="recipientList" placeholder="Enter recipient email addresses">
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label">Subject:</label>
+              <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject">
+            </div>
+            <div class="mb-3">
+              <label for="body" class="form-label">Body:</label>
+              <textarea class="form-control" name="body" id="body" rows="5" placeholder="Enter your message"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="attachmentList" class="form-label">Attachment (CSV file with email addresses):</label>
+              <input type="file" class="form-control" id="attachmentList" name="attachmentList" accept=".csv">
+            </div>
+            <button type="submit" class="btn btn-primary">Send Bulk Mail</button>
+          </form>
+        </div>
+        <div class="card-body" id="composeForm" style="display: block;">
+          <form action="/send-mail" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+              <label for="recipient" class="form-label">To:</label>
+              <input type="email" class="form-control" id="recipient" name="recipient" placeholder="Enter recipient email">
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label">Subject:</label>
+              <input type="text" class="form-control" id="subject" name="subject" placeholder="Enter subject">
+            </div>
+            <div class="mb-3">
+              <label for="body" class="form-label">Body:</label>
+              <textarea class="form-control" name="body" id="body" rows="5" placeholder="Enter your message"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="attachment" class="form-label">Attachment:</label>
+              <input type="file" class="form-control" id="attachment" name="attachment">
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="showSuccessToast()">Send</button>
+
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- /Main Wrapper -->
+<div class="searchpart">
+  <div class="searchcontent">
+    <div class="searchhead">
+      <h3>Search</h3>
+      <a id="closesearch"
+        ><i class="fa fa-times-circle" aria-hidden="true"></i
+      ></a>
+    </div>
+    <div class="searchcontents">
+      <div class="searchparts">
+        <input type="text" placeholder="search here" />
+        <a class="btn btn-searchs">Search</a>
+      </div>
+      <div class="recentsearch">
+        <h2>Recent Search</h2>
+        <ul>
+          <li>
+            <h6><i class="fa fa-search me-2"></i> Settings</h6>
+          </li>
+          <li>
+            <h6><i class="fa fa-search me-2"></i> Report</h6>
+          </li>
+          <li>
+            <h6><i class="fa fa-search me-2"></i> Invoice</h6>
+          </li>
+          <li>
+            <h6><i class="fa fa-search me-2"></i> Sales</h6>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Function to toggle between individual mail and bulk mail forms and update button text
+  function toggleMailForms() {
+    var bulkMailForm = document.getElementById("bulkMailForm");
+    var composeForm = document.getElementById("composeForm");
+    var bulkMailButton = document.getElementById("bulkMailButton");
+
+    if (bulkMailForm.style.display === "none") {
+      // Show bulk mail form and hide individual mail form
+      composeForm.style.display = "none";
+      bulkMailForm.style.display = "block";
+      // Update button text to "Individual Mail"
+      bulkMailButton.textContent = "Individual Mail";
+    } else {
+      // Show individual mail form and hide bulk mail form
+      bulkMailForm.style.display = "none";
+      composeForm.style.display = "block";
+      // Update button text to "Bulk Mail"
+      bulkMailButton.textContent = "Bulk Mail";
+    }
+  }
+
+  // Function to show Toastr notification on successful form submission
+  function showSuccessToast() {
+    toastr.success('Mail sent successfully!', 'Success');
+  }
+</script>

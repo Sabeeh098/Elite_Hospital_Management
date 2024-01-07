@@ -1,0 +1,79 @@
+<div class="content">
+  <div class="row">
+    <div class="col-lg-3 col-sm-6 col-12 d-flex">
+      <div class="dash-count">
+        <div class="dash-counts">
+          <h4><%= patientCount%></h4>
+          <h5>Total Patients</h5>
+        </div>
+        <div class="dash-imgs">
+          <i class="fa fa-bed"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12 d-flex">
+      <div class="dash-count das1">
+        <div class="dash-counts">
+          <h4><%= barcodeCount%></h4>
+          <h5>Total Barcode Products</h5>
+        </div>
+        <div class="dash-imgs">
+          <i class="fa fa-barcode"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12 d-flex">
+      <div class="dash-count das2">
+        <div class="dash-counts">
+          <h4><%= medicineCount%></h4>
+          <h5>Total Medicines</h5>
+        </div>
+        <div class="dash-imgs">
+          <i class="fa fa-th"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-sm-6 col-12 d-flex">
+      <div class="dash-count das3">
+        <div class="dash-counts">
+          <h4><%= billCount%></h4>
+          <h5>Total Bills</h5>
+        </div>
+        <div class="dash-imgs">
+          <i data-feather="file-text"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-0">
+    <div class="card-body">
+      <h4 class="card-title">Billing List</h4>
+      <div class="table-responsive dataview">
+        <table class="table datatable">
+          <!-- Table contents remain unchanged -->
+          <thead>
+            <tr>
+              <th>Bill No:</th>
+              <th>Medicine Category</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Total Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bills.forEach((bill) => { %>
+            <tr>
+              <td><%= bill.billNo%></td>
+              <td><%= bill.medCategory%></td>
+              <td><%= bill.medName%></td>
+              <td><%= bill.medPrice %></td>
+              <td><%= bill.totalPrice%></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

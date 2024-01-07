@@ -1,0 +1,56 @@
+<!-- layout.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <%- include('./meta') %> 
+    <%- include('./style') %>
+    <title>Inventory Management By IOREADY<%= title %></title>
+</head>
+<body>
+    <div id="global-loader">
+        <div class="whirly-loader"></div>
+    </div>
+
+    <div id="wrapper">
+        <!-- Sidebar Section -->
+        <%- include('./sidebar/sidebar-nurse.ejs') %>
+
+        <div id="content-wrapper" class="d-flex flex-column align-items-center">
+            <div id="content" style="width: 100%;"> <!-- Center the main content -->
+                <%- include(layout) %>
+            </div>
+
+            <!-- Footer Section -->
+            <footer class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p>&copy; 2023 IOREADY. All rights reserved.</p>
+                </div>
+                <div class="ml-auto">
+                    <p>Version 01.X</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <%- include('./theme-settings') %> 
+    <%- include('./script') %>
+</body>
+<script>
+    console.log("Layout Nurse applied!");
+  </script>
+</html>
+<style>
+  footer {
+    text-align: center;
+  }
+
+  footer p {
+    margin: 10px; /* Adjust margin as needed */
+  }
+
+  .ml-auto {
+    margin-left: auto;
+  }
+
+</style>

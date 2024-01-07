@@ -1,0 +1,127 @@
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Notice</h4>
+      <h6>Add & Edit Notices</h6>
+    </div>
+    <a href="#" class="btn btn-added ms-2" data-bs-toggle="modal" data-bs-target="#create" style="margin-right: 150px;">
+      <i class="ti-import me-2" data-bs-toggle="tooltip" title="Import Medicine"></i>
+      Add Notice
+    </a>
+  </div>
+  
+  <div class="modal fade" id="create" tabindex="-1" aria-labelledby="create" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="noticeForm" action="/add-notice" method="post">
+            <div class="form-group">
+              <label for="noticeTitle">Notice Title</label>
+              <input type="text" id="noticeTitle" name="noticeTitle" class="form-control" placeholder="Enter notice title" required>
+            </div>
+        
+            <div class="form-group">
+              <label for="noticeContent">Notice Content</label>
+              <textarea id="noticeContent" name="noticeContent" class="form-control" rows="4" placeholder="Enter notice content" required></textarea>
+            </div>
+        
+            <div class="form-group">
+              <label for="noticeDate">Notice Date</label>
+              <input type="date" id="noticeDate" name="date" class="form-control" required>
+            </div>
+        
+            <div class="col-lg-12">
+              <button type="submit" class="btn btn-submit me-2">Submit</button>
+              <a class="btn btn-cancel" data-bs-dismiss="modal">Cancel</a>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="row" id="noticeContainer">
+        <!-- Dynamic rendering of Notice Cards based on backend data -->
+        <% notices.forEach(function(notice) { %>
+          <div class="col-12 col-md-6 col-lg-4 d-flex">
+            <div class="card flex-fill bg-white">
+              <div class="card-header">
+                <h5 class="card-title mb-0"><%= notice.noticeTitle %></h5>
+              </div>
+              <div class="card-body">
+                <p class="card-text"><%= notice.noticeContent %></p>
+                <p class="card-date mb-0"><%= notice.date.toISOString().split('T')[0] %></p>
+                <div class="d-flex justify-content-between">
+                  <a class="btn btn-primary" href="javascript:void(0);" onclick="editNotice('<%= notice._id %>', '<%= notice.noticeTitle %>', '<%= notice.noticeContent %>', '<%= notice.date.toISOString().split('T')[0] %>')">Edit</a>
+
+                  <a class="btn btn-danger" href="javascript:void(0);" onclick="deleteNotice('<%= notice._id %>')">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editNoticeModal" tabindex="-1" aria-labelledby="editNoticeModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Notice</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editNoticeForm" action="/edit-notice" method="post">
+          <div class="form-group">
+            <label for="editNoticeTitle">Notice Title</label>
+            <input type="text" id="editNoticeTitle" name="noticeTitle" class="form-control" placeholder="Enter notice title" required>
+          </div>
+
+          <div class="form-group">
+            <label for="editNoticeContent">Notice Content</label>
+            <textarea id="editNoticeContent" name="noticeContent" class="form-control" rows="4" placeholder="Enter notice content" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="editNoticeDate">Notice Date</label>
+            <input type="date" id="editNoticeDate" name="date" class="form-control" required>
+          </div>
+
+          <input type="hidden" id="editNoticeId" name="noticeId">
+
+          <div class="col-lg-12">
+            <button type="submit" class="btn btn-submit me-2">Update</button>
+            <a class="btn btn-cancel" data-bs-dismiss="modal">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function editNotice(noticeId, noticeTitle, noticeContent, noticeDate) {
+    // Set the values of the editing modal fields
+    document.getElementById('editNoticeId').value = noticeId;
+    document.getElementById('editNoticeTitle').value = noticeTitle;
+    document.getElementById('editNoticeContent').value = noticeContent;
+    document.getElementById('editNoticeDate').value = noticeDate;
+
+    // Open the editing modal
+    $('#editNoticeModal').modal('show');
+  }
+</script>
+

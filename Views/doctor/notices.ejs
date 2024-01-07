@@ -1,0 +1,36 @@
+<div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Notice</h4>
+        <h6>Add & Edit Notices</h6>
+      </div>
+    </div>
+    
+    
+    <div class="card">
+      <div class="card-body">
+        <div class="row" id="noticeContainer">
+          <!-- Dynamic rendering of Notice Cards based on backend data -->
+          <% notices.forEach(function(notice) { %>
+            <div class="col-12 col-md-6 col-lg-4 d-flex">
+              <div class="card flex-fill bg-white">
+                <div class="card-header">
+                  <h5 class="card-title mb-0"><%= notice.noticeTitle %></h5>
+                </div>
+                <div class="card-body">
+                  <p class="card-text"><%= notice.noticeContent %></p>
+                  <p class="card-date mb-0"><%= notice.date.toISOString().split('T')[0] %></p>
+                  <div class="d-flex justify-content-between">
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  

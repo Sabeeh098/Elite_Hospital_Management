@@ -1,0 +1,158 @@
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Patients</h4>
+      <h6>Manage your Patients</h6>
+    </div>
+    <div class="page-btn">
+      <a href="/add-patients" class="btn btn-added"
+        ><img src="assets/img/icons/plus.svg" alt="img" class="me-1" />Add New
+        Patients</a
+      >
+    </div>
+  </div>
+
+
+ <!-- /product list -->
+<div class="card">
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table datanew">
+        <thead>
+          <tr>
+            <th>S. No</th>
+            <th>Patient Photo</th>
+            <th>Patient Name</th>
+            <th>Date of Birth</th>
+            <th>Admit Date</th>
+            <th>OT Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% patients.forEach((patient, index) => { %>
+            <tr>
+              <td><%= index + 1 %></td>
+              <td>
+                <img src="assets/barcode/<%= patient.patientPhoto %>" alt="Patient Photo" style="width: 30px; height: auto;">
+
+              </td>
+              <td><%= patient.patientName %></td>
+              <td><%= patient.dateOfbirth.toDateString() %></td>
+              <td><%= patient.admitDate.toDateString() %></td>
+              <td><%= patient.otDate.toDateString() %></td>
+              <td>
+                <a class="me-3 view-patient" data-patient-id="<%= patient._id %>" href="javascript:void(0);">
+                  <img src="assets/img/icons/eye.svg" alt="View Patient" />
+                </a>
+                <a class="me-3 confirm-text" href="javascript:void(0);" onclick="if(confirm('Are you sure you want to delete this patient?')) window.location.href='/admin-delete-patient?patientId=<%= patient._id %>'">
+                  <img src="assets/img/icons/delete.svg" alt="Delete Patient" />
+              </a>
+              <a class="me-3" href="javascript:void(0);" onclick="editPatient('<%= patient._id %>', '<%= patient.patientName %>', '<%= patient.dateOfbirth %>', '<%= patient.gender %>', '<%= patient.admitDate %>', '<%= patient.otDate %>')">
+                  <img src="assets/img/icons/edit.svg" alt="Edit Patient" />
+              </a>
+              <div class="modal fade" id="editpatientModal-<%= patient._id %>" tabindex="-1" aria-labelledby="editpatientModal" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Patient</h5>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="editPatientForm-<%= patient._id %>" action="/admin-edit-patient" method="post">
+                                <div class="form-group">
+                                    <label for="editPatientName-<%= patient._id %>">Patient Name</label>
+                                    <input type="text" id="editPatientName-<%= patient._id %>" name="patientName" class="form-control" placeholder="Enter patient name" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editPatientDateOfBirth-<%= patient._id %>">Date of Birth</label>
+                                    <input type="date" id="editPatientDateOfBirth-<%= patient._id %>" name="dateOfbirth" class="form-control"  required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Gender</label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="editMale-<%= patient._id %>" name="gender" value="male">
+                                        <label class="form-check-label" for="editMale-<%= patient._id %>">Male</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="editFemale-<%= patient._id %>" name="gender" value="female">
+                                        <label class="form-check-label" for="editFemale-<%= patient._id %>">Female</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editPatientAdmitDate-<%= patient._id %>">Admit Date</label>
+                                    <input type="date" id="editPatientAdmitDate-<%= patient._id %>" name="admitDate" class="form-control" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="editPatientOTDate-<%= patient._id %>">OT Date</label>
+                                    <input type="date" id="editPatientOTDate-<%= patient._id %>" name="otDate" class="form-control" required>
+                                </div>
+
+                                <input type="hidden" id="editPatientId-<%= patient._id %>" name="patientId">
+
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-submit me-2">Update</button>
+                                    <a class="btn btn-cancel" data-bs-dismiss="modal">Cancel</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+              </td>
+            </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const viewPatientLinks = document.querySelectorAll('.view-patient');
+
+  viewPatientLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
+      const patientId = link.getAttribute('data-patient-id');
+      fetch(`/get-patient-details/${patientId}`)
+        .then(response => response.json())
+        .then(data => {
+          window.location.href = `/patient-details?patientId=${patientId}`;
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  });
+});
+
+</script>
+<script>
+  function editPatient(patientId, patientName, dateOfBirth, gender, admitDate, otDate) {
+      // Set values to the modal fields
+      document.getElementById('editPatientName-' + patientId).value = patientName;
+
+      // Set the gender radio button
+      if (gender === 'male') {
+          document.getElementById('editMale-' + patientId).checked = true;
+      } else if (gender === 'female') {
+          document.getElementById('editFemale-' + patientId).checked = true;
+      }
+
+      document.getElementById('editPatientDateOfBirth-' + patientId).value = dateOfBirth;
+      document.getElementById('editPatientAdmitDate-' + patientId).value = admitDate;
+      document.getElementById('editPatientOTDate-' + patientId).value = otDate;
+
+      // Set the patientId to a hidden field for reference
+      document.getElementById('editPatientId-' + patientId).value = patientId;
+
+      // Trigger the modal to open
+      $('#editpatientModal-' + patientId).modal('show');
+  }
+</script>

@@ -1,0 +1,56 @@
+<div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Patients</h4>
+        <h6>Manage your Patients</h6>
+      </div>
+      
+    </div>
+  
+  
+   <!-- /product list -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table datanew">
+          <thead>
+            <tr>
+              <th>S. No</th>
+              <th>Patient Photo</th>
+              <th>Patient Name</th>
+              <th>Date of Birth</th>
+              <th>Admit Date</th>
+              <th>OT Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% patients.forEach((patient, index) => { %>
+              <tr>
+                <td><%= index + 1 %></td>
+                <td>
+                  <img src="assets/barcode/<%= patient.patientPhoto %>" alt="Patient Photo" style="width: 30px; height: auto;">
+  
+                </td>
+                <td><%= patient.patientName %></td>
+                <td><%= patient.dateOfbirth.toDateString() %></td>
+                <td><%= patient.admitDate.toDateString() %></td>
+                <td><%= patient.otDate.toDateString() %></td>
+                <td>
+                  <a class="me-3 view-patient" href="/Nurse-view-patient?patientId=<%= patient._id %>">
+                    <img src="assets/img/icons/eye.svg" alt="View Patient" />
+                </a>
+                <a class="me-3" href="/nurse-patient-edit?patientId=<%= patient._id %>">
+                  <img src="assets/img/icons/edit.svg" alt="Edit Patient" />
+                </a>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+ 

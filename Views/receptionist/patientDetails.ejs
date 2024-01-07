@@ -1,0 +1,88 @@
+
+<div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Product Details</h4>
+        <h6>Full details of a product</h6>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-lg-8 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="productdetails">
+              <ul class="product-bar">
+                <li>
+                  <h4>Patient Name</h4>
+                  <h6><strong><%= patient?.patientName %></strong></h6>
+                </li>
+                <li>
+                  <h4>Patient Code</h4>
+                  <h6><strong><%= patient?.patientCode %></strong></h6>
+                </li>
+                <li>
+                  <h4>Date of Birth</h4>
+                  <h6><strong><%= patient?.dateOfbirth.toDateString() %></strong></h6>
+                </li>
+                <li>
+                  <h4>Gender</h4>
+                  <h6><strong><%= patient?.gender %></strong></h6>
+                </li>
+                <li>
+                  <h4>Admit Date</h4>
+                  <h6><strong><%= patient?.admitDate.toDateString() %></strong></h6>
+                </li>
+                <li>
+                  <h4>OT Date</h4>
+                  <h6><strong><%= patient?.otDate.toDateString() %></strong></h6>
+                </li>
+                <li>
+                  <h4>Operation Side</h4>
+                  <h6><strong><%= patient?.operationSide%></strong></h6>
+                </li>
+                <li>
+                  <h4>Operation Joint</h4>
+                  <h6><strong><%= patient?.operationJoint %></strong></h6>
+                </li>
+                <li>
+                  <h4>Femur Prothesis Size</h4>
+                  <h6><strong><%= patient?.femurProsthesisSize %></strong></h6>
+                </li>
+                <li>
+                  <h4>Tibial Size</h4>
+                  <h6><strong><%= patient?.tibialSize %></strong></h6>
+                </li>
+                <li>
+                  <h4>Plastic Insert Size</h4>
+                  <h6><strong><%= patient?.plasticInsertSize %></strong></h6>
+                </li>
+                <li>
+                  <h4>Patella Size</h4>
+                  <h6><strong><%= patient?.patellaSize %></strong></h6>
+                </li>
+                <li>
+                  <h4>Patient Requirement</h4>
+                  <h6><strong><%= patient?.patientRequirements%></strong></h6>
+                  <% console.log(patient.patientRequirements) %>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="slider-product">
+              <img src="assets/barcode/<%= patient?.patientPhoto %>" alt="Patient Photo" />
+              <h4>Patient Photo</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    
+  </div>
+  

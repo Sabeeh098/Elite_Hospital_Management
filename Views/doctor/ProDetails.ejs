@@ -1,0 +1,262 @@
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Product Details</h4>
+      <h6>View Product details</h6>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="card-sales-split">
+        <h2>Patient Code: <%= patient?.patientCode %></h2>
+      </div>
+      <div class="invoice-box table-height" style="
+        max-width: 1600px;
+        width: 100%;
+        overflow: auto;
+        margin: 15px auto;
+        padding: 0;
+        font-size: 14px;
+        line-height: 24px;
+        color: #555;
+      ">
+        <table cellpadding="0" cellspacing="0" style="width: 100%; line-height: inherit; text-align: left">
+          <tbody>
+            <tr class="top">
+              <td colspan="6" style="padding: 5px; vertical-align: top">
+                <table style="width: 100%; line-height: inherit; text-align: left">
+                  <tbody>
+                    <tr>
+                      <td style="padding: 5px; vertical-align: top; text-align: left; padding-bottom: 20px;">
+                        <font style="vertical-align: inherit; margin-bottom: 25px">
+                          <font style="
+                              vertical-align: inherit;
+                              font-size: 14px;
+                              color: #7367f0;
+                              font-weight: 600;
+                              line-height: 35px;
+                            ">Patient Name</font>
+                          <h4><%= patient?.patientName %></h4>
+                        </font>
+                      </td>
+                      <td style="padding: 5px; vertical-align: top; text-align: left; padding-bottom: 20px;">
+                        <font style="vertical-align: inherit; margin-bottom: 25px">
+                          <font style="
+                              vertical-align: inherit;
+                              font-size: 14px;
+                              color: #7367f0;
+                              font-weight: 600;
+                              line-height: 35px;
+                            ">Nurse Name</font>
+                          <h4><%= patient?.nurseName %></h4>
+                        </font>
+                      </td>
+                      <td style="padding: 5px; vertical-align: top; text-align: left; padding-bottom: 20px;">
+                        <font style="vertical-align: inherit; margin-bottom: 25px">
+                          <font style="
+                            vertical-align: inherit;
+                            font-size: 14px;
+                            color: #7367f0;
+                            font-weight: 600;
+                            line-height: 35px;
+                          ">Patient Photo</font>
+                          <br />
+                          <img src="assets/barcode/<%= patient?.patientPhoto %>" alt="Patient Photo" style="width: 70px; height: 70px;" />
+                        </font>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            <tr class="heading" style="background: #f3f2f7">
+              <td style="padding: 5px; vertical-align: middle; font-weight: 600; color: #5e5873; font-size: 14px; padding: 10px;">
+                Product Name
+              </td>
+              <td style="padding: 5px; vertical-align: middle; font-weight: 600; color: #5e5873; font-size: 14px; padding: 10px;">
+                <!-- Add Product Name here -->
+              </td>
+            </tr>
+            <tr class="details" style="border-bottom: 1px solid #e9ecef">
+              <td style="padding: 10px; vertical-align: top; display: flex; align-items: center;">
+                Operation Side
+              </td>
+              <td style="padding: 10px; vertical-align: top;"><%= patient?.operationSide %></td>
+            </tr>
+            <tr class="details" style="border-bottom: 1px solid #e9ecef">
+              <td style="padding: 10px; vertical-align: top; display: flex; align-items: center;">
+                Operation Joint
+              </td>
+              <td style="padding: 10px; vertical-align: top;"><%= patient?.operationJoint %></td>
+            </tr>
+            <tr class="details" style="border-bottom: 1px solid #e9ecef">
+              <td style="padding: 10px; vertical-align: top; display: flex; align-items: center;">
+                Femur Porathesis Size
+              </td>
+              <td style="padding: 10px; vertical-align: top;"><%= patient?.femurProsthesisSize %></td>
+            </tr>
+            <tr class="details" style="border-bottom: 1px solid #e9ecef">
+              <td style="padding: 10px; vertical-align: top; display: flex; align-items: center;">
+                Tibial Size
+              </td>
+              <td style="padding: 10px; vertical-align: top;"><%= patient?.tibialSize %></td>
+            </tr>
+            <tr class="details" style="border-bottom: 1px solid #e9ecef">
+              <td style="padding: 10px; vertical-align: top; display: flex; align-items: center;">
+                Plastic Insert Size
+              </td>
+              <td style="padding: 10px; vertical-align: top;"><%= patient?.plasticInsertSize %></td>
+            </tr>
+            <tr class="details" style="border-bottom: 1px solid #e9ecef">
+              <td style="padding: 10px; vertical-align: top; display: flex; align-items: center;">
+                Pattella Size
+              </td>
+              <td style="padding: 10px; vertical-align: top;"><%= patient?.patellaSize %></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group" style="border: 1px solid #ddd; padding: 10px;">
+            <label>OT Requirements</label>
+            <ul style="list-style-type: none; padding: 0;">
+              <% patient?.patientRequirements.forEach(requirement => { %>
+                <li><%= requirement %></li>
+              <% }); %>
+            </ul>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <a href="javascript:void(0);" class="btn btn-submit me-2 approve-btn" onclick="updatePatientStatus('<%= patient._id %>', 'approved')">Approve</a>
+          <a href="javascript:void(0);" class="btn btn-cancel needs-training-btn" onclick="updatePatientStatus('<%= patient._id %>', 'needsTraining')">Needs Training</a>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Place this script at the end of your HTML body -->
+<script>
+  async function loadPatientDetails() {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const patientId = urlParams.get('patientId');
+
+      if (!patientId) {
+        console.error('Patient ID not found in URL');
+        return;
+      }
+
+      const response = await fetch(`/get-product-details/${patientId}`);
+      if (!response.ok) {
+        throw new Error(`Failed to fetch patient details: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      const approveBtn = document.querySelector('.approve-btn');
+      const needsTrainingBtn = document.querySelector('.needs-training-btn');
+
+      if (data.patient.status === 'approved') {
+        approveBtn.textContent = 'Approved';
+        approveBtn.classList.remove('btn-submit');
+        approveBtn.classList.add('btn-approved');
+      } else if (data.patient.status === 'needsTraining') {
+        needsTrainingBtn.textContent = 'Needs Training';
+        needsTrainingBtn.classList.remove('btn-cancel');
+        needsTrainingBtn.classList.add('btn-needs-training');
+      }
+
+      updateUI(data.patient);
+    } catch (error) {
+      console.error('Error fetching patient details:', error);
+    }
+  }
+
+  async function updatePatientStatus(status) {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const patientId = urlParams.get('patientId');
+
+      if (!patientId) {
+        console.error('Patient ID not found in URL');
+        return;
+      }
+
+      const response = await fetch(`/update-patient-status/${patientId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update patient status: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+
+      const approveBtn = document.querySelector('.approve-btn');
+      const needsTrainingBtn = document.querySelector('.needs-training-btn');
+
+      if (status === 'approved') {
+        approveBtn.textContent = 'Approved';
+        approveBtn.classList.remove('btn-submit');
+        approveBtn.classList.add('btn-approved');
+        // Reset needsTrainingBtn if it was set
+        needsTrainingBtn.textContent = 'Needs Training';
+        needsTrainingBtn.classList.remove('btn-cancel');
+        needsTrainingBtn.classList.add('btn-needs-training');
+      } else if (status === 'needsTraining') {
+        needsTrainingBtn.textContent = 'Needs Training';
+        needsTrainingBtn.classList.remove('btn-cancel');
+        needsTrainingBtn.classList.add('btn-needs-training');
+        // Reset approveBtn if it was set
+        approveBtn.textContent = 'Approve';
+        approveBtn.classList.remove('btn-approved');
+        approveBtn.classList.add('btn-submit');
+      }
+    } catch (error) {
+      console.error('Error updating patient status:', error);
+    }
+  }
+
+  function updateUI(patient) {
+    // Update your UI elements with the patient data
+    document.querySelector('.patient-name').textContent = patient.patientName;
+    document.querySelector('.nurse-name').textContent = patient.nurseName;
+    // Add similar lines for other patient details
+
+    // Update OT Requirements list
+    const otRequirementsList = document.querySelector('.ot-requirements-list');
+    otRequirementsList.innerHTML = '';
+    patient.patientRequirements.forEach(requirement => {
+      const li = document.createElement('li');
+      li.textContent = requirement;
+      otRequirementsList.appendChild(li);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    loadPatientDetails();
+
+    // Attach event listener to the approve button
+    const approveBtn = document.querySelector('.approve-btn');
+    approveBtn.addEventListener('click', () => {
+      updatePatientStatus('approved');
+    });
+
+    // Attach event listener to the needs training button
+    const needsTrainingBtn = document.querySelector('.needs-training-btn');
+    needsTrainingBtn.addEventListener('click', () => {
+      updatePatientStatus('needsTraining');
+    });
+  });
+</script>
+
+
+
+

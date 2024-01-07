@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <title>Edit Prescription</title>
+</head>
+<body>
+
+<div class="content">
+    <div class="page-header">
+        <div class="page-title">
+            <h4>Edit Prescription</h4>
+            <h6>Edit Prescription Details</h6>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <form id="prescriptionForm" action="/doctor-prescription" method="POST">
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label>Patient Name</label>
+                        <input type="text" class="form-control" name="patientName" value="<%= patientDetails?.patientName %>" readonly>
+                    </div>
+                    <input type="text" name="patientId" value="<%= patientDetails._id%>"  hidden>
+                    <div class="col-lg-6 mb-3">
+                        <label for="nurseName">Nurse Name</label>
+                        <select class="form-control" id="nurseName" name="nurseId">
+                            <option selected disabled>Select a Nurse</option>
+                            <% nurse.forEach((nurse) => { %>
+                                <option value="<%= nurse._id %>"><%= nurse?.nurseName %></option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label>Date Of Birth</label>
+                        <input type="date" class="form-control" name="dateOfbirth" value="<%= formatDate(patientDetails?.dateOfbirth) %>" readonly>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label>Gender</label>
+                        <input type="text" class="form-control" name="gender" value="<%= patientDetails?.gender %>" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description">Description</label>
+                    <textarea class="form-control" name="discription" id="description" required><%= patientDetails?.discription %></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label>Operation Side</label>
+                    <input type="text" class="form-control" name="operationSide" value="<%= patientDetails?.operationSide %>">
+                </div>
+
+                <div class="mb-3">
+                    <label>Operation Joint</label>
+                    <input type="text" class="form-control" name="operationJoint" value="<%= patientDetails?.operationJoint %>">
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6 mb-3">
+                        <label>Surgeon Recommended Femoral Prosthesis Size (Left)</label>
+                        <select class="form-control" name="femurProsthesisSize">
+                            <% if (dataAfterKeyword.left) { %>
+                                <% dataAfterKeyword.left.forEach(option => { %>
+                                    <option value="<%= option %>"><%= option %></option>
+                                <% }); %>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label>Surgeon Recommended Tibial Size (Right)</label>
+                        <select class="form-control" name="tibialSize">
+                            <% if (dataAfterKeyword.right) { %>
+                                <% dataAfterKeyword.right.forEach(option => { %>
+                                    <option value="<%= option %>"><%= option %></option>
+                                <% }); %>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label>Surgeon Recommended Plastic Insert Size (Left)</label>
+                        <select class="form-control" name="plasticInsertSize">
+                            <% if (dataAfterKeyword.left) { %>
+                                <% dataAfterKeyword.left.forEach(option => { %>
+                                    <option value="<%= option %>"><%= option %></option>
+                                <% }); %>
+                            <% } %>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label>Surgeon Recommended Patella Size (Right)</label>
+                        <select class="form-control" name="patellaSize">
+                            <% if (dataAfterKeyword.right) { %>
+                                <% dataAfterKeyword.right.forEach(option => { %>
+                                    <option value="<%= option %>"><%= option %></option>
+                                <% }); %>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <h4 class="my-1 d-inline-block">Patient Requirement For OT Description</h4>
+                    <div class="input-group" style="margin-top: 5px;">
+                        <input type="text" id="newRequirement" class="form-control input-with-margin" name="patientRequirements" placeholder="Enter your requirement" style="margin-bottom: 5px;">
+                        <button type="button" class="btn btn-primary btn-sm ms-2" style="margin-bottom: 5px;" onclick="addItem()">Add</button>
+                    </div>
+                    <ul class="list-group" id="handle-list-1">
+                        <!-- Existing list items -->
+                    </ul>
+                </div>
+                
+                <!-- Add this hidden input field -->
+                <input type="hidden" id="hiddenPatientRequirements" name="patientRequirements" />
+                
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-submit me-2" >Submit</button>
+                    <a class="btn btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    function addItem() {
+        var userInput = document.getElementById("newRequirement").value;
+
+        if (userInput.trim() !== "" && userInput.trim().toLowerCase() !== "add") {
+            // Create a new list item without the handle element
+            var newItem = document.createElement("li");
+            newItem.className = "list-group-item";
+            newItem.textContent = userInput; // Set the text content instead of innerHTML
+
+            // Append the new item to the list
+            document.getElementById("handle-list-1").appendChild(newItem);
+
+            // Move the "Add" button inside the list group as the last child
+            document.getElementById("handle-list-1").appendChild(document.querySelector('.input-group'));
+
+            // Clear the input field after adding the item
+            document.getElementById("newRequirement").value = "";
+
+            // Update the hidden input field
+            updateHiddenInput();
+        }
+    }
+
+    function updateHiddenInput() {
+        // Retrieve the patient requirements from the list and update the hidden input field
+        const requirementsList = document.getElementById("handle-list-1");
+        const requirementsArray = Array.from(requirementsList.children).map(item => item.innerText.trim());
+
+        document.getElementById("hiddenPatientRequirements").value = JSON.stringify(requirementsArray);
+    }
+</script>
+
+
+
+</body>
+</html>

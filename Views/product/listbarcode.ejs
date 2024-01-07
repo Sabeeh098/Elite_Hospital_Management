@@ -1,0 +1,85 @@
+<!-- views/product/listbarcode.ejs -->
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Barcode List</h4>
+      <h6>Manage your Barcodes</h6>
+    </div>
+    <div class="page-btn">
+      <a href="add-product" class="btn btn-added">
+        <img src="assets/img/icons/plus.svg" alt="img" class="me-1" />Add New Barcode
+      </a>
+    </div>
+  </div>
+
+  <!-- /product list -->
+  <div class="card">
+    <div class="card-body">
+      <!-- Table Section -->
+      <div class="table-responsive">
+        <table class="table datanew">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all" />
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>Product Code</th>
+              <th>Product Description</th>
+              <th>Brand</th>
+              <th>Sub Category</th>
+             
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for (let barcode of barcodes) { %>
+              <% console.log(barcode)%>
+              <tr>
+                <td>
+                  <label class="checkboxs">
+                    <input type="checkbox" />
+                    <span class="checkmarks"></span>
+                  </label>
+                </td>
+                <td><%= barcode.productCode %></td>
+                <td><%= barcode.productDescription %></td>
+                <td><%= barcode.productBrand %></td>
+                <td><%= barcode.subCategory %></td>
+             
+                
+                <td>
+                  <a class="me-3" onclick="viewBarcodeDetails('<%= barcode._id %>')">
+                    <img src="assets/img/icons/eye.svg" alt="img" />
+                  </a>
+                  <a class="me-3" href="edit-product">
+                    <img src="assets/img/icons/edit.svg" alt="img" />
+                  </a>
+                  <a class="confirm-text" href="javascript:void(0);">
+                    <img src="assets/img/icons/delete.svg" alt="img" />
+                  </a>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <!-- /Table Section -->
+    </div>
+  </div>
+  <!-- /product list -->
+</div>
+
+<script>
+  async function viewBarcodeDetails(barcodeId) {
+    console.log('Viewing barcode details for ID:', barcodeId);
+    try {
+      // Navigate to the barcode details page with the barcode ID as a query parameter
+      window.location.href = `/barcode-details?id=${barcodeId}`;
+    } catch (error) {
+      console.error('Error navigating to barcode details page:', error);
+    }
+  }
+</script>

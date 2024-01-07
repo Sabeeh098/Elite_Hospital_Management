@@ -1,0 +1,103 @@
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<p>Bill No: <span id="billNoDisplay"><%= billNo %></span></p>
+<div class="card">
+  <div class="card-body">
+    <form action="/add-bill" method="post">
+    <div class="row">
+      <div class="row" >
+        <div class="col-sm-6 col-6 column col-lg-2" >
+          <label>Medicine Category</label>
+          <select class="select" id="medicineCategorySelect" style="margin-top: 11px;" name="medCategory">
+            <% allMedicineData.forEach(medicine => { %>
+              <option value="<%= medicine.medCategory %>"><%= medicine.medCategory %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="col-sm-12 col-12 column col-lg-2">
+          <label>Medicine Name</label>
+      <select class="select" id="medicineNameSelect" style="margin-top: 11px;" name="medName">
+        <% allMedicineData.forEach(medicine => { %>
+          <option value="<%= medicine.medName %>"><%= medicine.medName %></option>
+        <% }) %>
+      </select>
+        </div>
+        <div class="col-sm-3 col-3 column col-lg-2">
+          <label>Medicine Price</label>
+    
+      <select class="select" id="medicinePriceSelect" style="margin-top: 11px;" name="medPrice">
+        <% allMedicineData.forEach(medicine => { %>
+          <option value="<%= medicine.medPrice %>"><%= medicine.medPrice %></option>
+        <% }) %>
+      </select>
+        </div>
+        <div class="col-sm-3 col-3 column col-lg-2" style="margin-top: 10px;">
+          <div class="page-btn" style="margin-top: 9px;">
+            <a class="btn btn-added"
+              ><img src="assets/img/icons/plus.svg" class="me-2" alt="img" /></a
+            >
+          </div>
+        </div>
+      </div>
+      <style>
+        .btn-added {
+          border: 2px solid #000; /* Set your preferred border style and color */
+          padding: 5px; /* Add padding for better appearance */
+          display: inline-block;
+          width: 34px;
+          height: 34px; /* Ensure the button behaves like an inline element */
+        }
+      </style>
+      <div class="col-lg-3 col-sm-6 col-12">
+        <div class="form-group">
+          <label>Doctor Name</label>
+          <input type="text" class="form-control" id="doctorNameInput" name="doctorName"/>
+        </div>
+      </div>
+      <div class="col-lg-3 col-sm-6 col-12">
+        <div class="form-group">
+          <label>Total Price</label>
+          <input type="text" class="form-control" id="totalPriceInput"  name="totalPrice" />
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="form-group">
+          <label>Note</label>
+          <textarea class="form-control" id="noteTextarea" rows="1" cols="10" name="note"></textarea>
+        </div>
+      </div>
+      <input type="hidden" id="billNoInput" name="billNo" value="<%= billNo %>">
+      <div class="col-lg-12">
+        <button class="btn btn-submit me-2" type="submit">Submit</button>
+        <a href="" class="btn btn-cancel">Cancel</a>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Handle plus button click
+    $('.page-btn .btn-added').click(function() {
+      console.log('Button clicked');
+
+      // Find the closest '.row' to the clicked button
+      var clickedRow = $(this).closest('.row');
+      console.log('Clicked row:', clickedRow);
+
+      // Clone the closest row
+      var newRow = clickedRow.clone();
+      console.log('Cloned row:', newRow);
+
+      // Clear values of input/select fields in the cloned row
+      newRow.find('select').val('');
+      newRow.find('input').val('');
+      newRow.find('textarea').val('');
+
+      // Append the cloned row after the last row
+      clickedRow.after(newRow);
+    });
+  });
+</script>

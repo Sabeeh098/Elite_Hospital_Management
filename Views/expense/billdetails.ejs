@@ -1,0 +1,102 @@
+
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Bill Details</h4>
+      <h6>Full details of a Bill</h6>
+    </div>
+  </div>
+  <!-- Print button -->
+  <button class="btn btn-primary" onclick="printBillDetails()">Print</button>
+
+  </div>
+
+  <div class="row">
+    <div class="col-lg-8 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="productdetails">
+            <ul class="product-bar">
+              <li>
+                <h4>Medicine Name</h4>
+                <h6><%= bills.medName %></h6>
+              </li>
+              <li>
+                <h4>Bill No:</h4>
+                <h6><%= bills.billNo %></h6>
+              </li>
+              <li>
+                <h4>Category</h4>
+                <h6><%= bills.medCategory %></h6>
+              </li>
+              <li>
+                <h4>Price</h4>
+                <h6><%= bills.medPrice %></h6>
+              </li>
+              <li>
+                <h4>Doctor Name</h4>
+                <h6><%= bills.doctorName %></h6>
+              </li>
+              <li>
+                <h4>Date</h4>
+                <h6><%= bills.date %></h6>
+              </li>
+              <li>
+                <h4>Note</h4>
+                <h6><%= bills.note %></h6>
+              </li>
+              <li>
+                <h4>Total Price</h4>
+                <h6><%= bills.totalPrice %></h6>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+
+<script>
+  // Function to create a print-friendly view of bill details
+  function printBillDetails() {
+    // Get the content of the <ul class="product-bar">
+    var productBar = document.querySelector('.product-bar');
+
+    // Create a new window for the print view
+    var printWindow = window.open('', '_blank');
+    printWindow.document.open();
+
+    // Write the necessary styles for printing
+    printWindow.document.write('<html><head><style>@media print { @page { size: A4; margin: 0; } }</style></head><body>');
+
+    // Write the title
+    printWindow.document.write('<h4>Bill Details</h4>');
+    printWindow.document.write('<h6>Full details of a Bill</h6>');
+
+    // Write the printable content
+    printWindow.document.write('<ul style="list-style: none; padding: 0;">');
+
+    // Get the list items from the original content and write them to the print window
+    var listItems = productBar.querySelectorAll('li');
+    listItems.forEach(function (listItem) {
+      var title = listItem.querySelector('h4').innerText;
+      var value = listItem.querySelector('h6').innerText;
+
+      printWindow.document.write('<li><strong>' + title + ':</strong> ' + value + '</li>');
+    });
+
+    printWindow.document.write('</ul>');
+
+    // Close the body and HTML tags
+    printWindow.document.write('</body></html>');
+
+    // Close the document for the new window
+    printWindow.document.close();
+
+    // Trigger the print function after a short delay
+    setTimeout(function () { printWindow.print(); }, 10);
+  }
+</script>

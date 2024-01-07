@@ -1,0 +1,76 @@
+<!-- Add this section in your barcodedetails.ejs template -->
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Barcode Details</h4>
+      <h6>Full details of a Barcode</h6>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-8 col-sm-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="bar-code-view">
+            <img src="assets/barcode/<%= details.barcodeImage %>" alt="barcode" />
+          </div>
+          <a class="printimg">
+            <img src="assets/img/icons/printer.svg" alt="print" />
+          </a>
+          <div class="productdetails">
+            <ul class="product-bar">
+              <li>
+                <h4>Product Code</h4>
+                <h6><%= details.productCode %></h6>
+              </li>
+              <li>
+                <h4>Full Product Description</h4>
+                <h6><%= details.productDescription %></h6>
+              </li>
+              <li>
+                <h4>Product Brand</h4>
+                <h6><%= details.productBrand %></h6>
+              </li>
+              <li>
+                <h4>Sterile</h4>
+                <h6><%= details.sterile %></h6>
+              </li>
+              <li>
+                <h4>Material of Construction</h4>
+                <h6><%= details.meterialOfConstruct %></h6>
+              </li>
+              <li>
+                <h4>Subcategory</h4>
+                <h6><%= details.subCategory %></h6>
+              </li>
+              <li>
+                <h4>Product Type</h4>
+                <h6><%= details.productType %></h6>
+              </li>
+              <li>
+                <h4>Each Pack</h4>
+                <h6><%= details.eachPack %></h6>
+              </li>
+              <li>
+                <h4>Unit of Measure</h4>
+                <h6><%= details.unitOfMeasure %></h6>
+              </li>
+              <li>
+                <h4>Medical Device Classification</h4>
+                <h6><%= details.medicalDeviceClassification %></h6>
+              </li>
+              <li>
+                <h4>GS1 Code</h4>
+                <h6><%= details.gs1Code %></h6>
+              </li>
+              <li>
+                <h4>Barcode Code</h4>
+                <h6><%= details.barcodeCode %></h6>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</div>

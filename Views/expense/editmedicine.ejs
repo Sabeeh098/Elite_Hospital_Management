@@ -1,0 +1,69 @@
+<!-- views/expense/editmedicine.ejs -->
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Edit Medicine</h4>
+      <h6>Add/Update Medicine</h6>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <form id="updateMedicineForm" action="/update-medicine/<%= medicine._id %>" method="POST" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Medicine Name</label>
+            <input type="text" name="medName" value="<%= medicine.medName %>" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Category </label>
+            <input type="text" name="medCategory" value="<%= medicine.medCategory %>" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Company </label>
+            <input type="text" name="medCompany" value="<%= medicine.medCompany %>" />
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Photo</label>
+            <input type="file" name="medPhoto" />
+            <p>Current Photo: <%= medicine.medPhoto ? 'Already Uploaded' : 'No Photo' %></p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Barcode Photo</label>
+            <input type="file" name="medBarcode" />
+            <p>Current Barcode Photo: <%= medicine.medBarcode ? 'Already Uploaded' : 'No Barcode Photo' %></p>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label>Amount</label>
+            <input type="text" name="medPrice" value="<%= medicine.medPrice %>" />
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label>Description</label>
+            <textarea name="medDescription" rows="3"><%= medicine.medDescription %></textarea>
+          </div>
+        </div>
+        
+        <div class="col-lg-12">
+          <button type="submit" class="btn btn-submit me-2">Update</button>
+          <a href="/expense-list" class="btn btn-cancel">Cancel</a>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+

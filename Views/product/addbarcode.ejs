@@ -1,0 +1,157 @@
+<div class="content">
+  <% if (locals.showAlert) { %>
+    <div class="alert alert-success" role="alert">
+      Barcode added successfully!
+    </div>
+  <% } %>
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Add Barcode</h4>
+      <h6>Create Barcodes for Products</h6>
+      <div class="page-btn">
+        <a href="#" class="btn btn-added ms-2" data-bs-toggle="modal" data-bs-target="#create">
+          <i class="ti-import me-2" data-bs-toggle="tooltip" title="Import Medicine"></i>
+          Import Barcodes
+        </a>
+      </div>
+      <div class="modal fade" id="create" tabindex="-1" aria-labelledby="create" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Upload CSV File</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="csvUploadForm" action="/upload-bulk-barcodes" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="csvFile">Choose CSV File:</label>
+                            <input type="file" id="csvFile" name="csvFile" class="form-control-file" accept=".csv" required>
+                            <small class="form-text text-muted">Upload a CSV file.</small>
+                        </div>
+    
+                        <div class="col-lg-12">
+                            <button type="submit" class="btn btn-submit me-2">Upload</button>
+                            <a class="btn btn-cancel" data-bs-dismiss="modal">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+      
+    </div>
+  </div>
+  <!-- /add -->
+  <form action="/add-barcode" method="POST" enctype="multipart/form-data">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Product Code</label>
+            <input type="text" name="productCode" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Product Description</label>
+            <input type="text" name="productDescription">
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Sterile(S)/Non Sterile(NS)</label>
+            <input type="text" class="select" name="sterile">
+           
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Product Brand</label>
+            <input type="text" class="select" name="productBrand">
+           
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Meterial of Construct</label>
+            <input type="text" class="select" name="meterialOfConstruct">
+            
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Sub Category</label>
+            <input type="text" name="subCategory" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Product Type</label>
+            <input type="text" name="productType" />
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Each/Pack</label>
+            <input type="text" name="eachPack"/>
+          </div>
+        </div>
+        <!-- <div class="col-lg-12">
+          <div class="form-group">
+            <label>Unit of Measure (Qty)</label>
+            <textarea class="form-control"></textarea>
+          </div>
+        </div> -->
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Unit of Measure (Qty)</label>
+            <input type="text" name="unitOfMeasure"/>
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Medical Device Classification</label>
+            <input class="select" type="text" name="medicalDeviceClassification">
+               
+          </div>
+        </div>
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>GS1 Code</label>
+            <input type="text" name="gs1Code" />
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-sm-6 col-12">
+          <div class="form-group">
+            <label>Barcode Code</label>
+            <input type="text" name="barcodeCode" />
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="form-group">
+            <label>Barcode</label>
+            <div class="image-upload">
+              <input type="file" name="barcodeImage"/>
+              <div class="image-uploads">
+                <img src="assets/img/icons/upload.svg" alt="img" />
+                <h4>Drag and drop a file to upload</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <button type="submit" class="btn btn-submit me-2">Submit</button>
+          <a href="/product-list" class="btn btn-cancel">Cancel</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
+ 
+  <!-- /add -->
+</div>

@@ -1,0 +1,312 @@
+
+<div class="content">
+  <div class="page-header">
+  
+    <div class="page-title">
+      <h4>Pharmacy Bills</h4>
+    </div>
+    <div class="page-btn">
+      <a href="javascript:void(0);" onclick="openExpenseModal()" class="btn btn-added">
+          <img src="assets/img/icons/plus.svg" class="me-2" alt="img" />
+          Generate new Bill
+      </a>
+  </div>
+  </div>
+ 
+  <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 4;">
+    <!-- Container for the modal content -->
+    <div id="expenseModalContainer" style="position: fixed; top: 55%; left: 60%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border-radius: 5px; z-index: 2; width: 70%;">
+    </div>
+</div>
+
+
+
+  
+  <!-- /product list -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="assets/img/icons/filter.svg" alt="img" />
+              <span><img src="assets/img/icons/closes.svg" alt="img" /></span>
+            </a>
+          </div>
+          <div class="search-input">
+            
+            <a class="btn btn-searchset" onclick="searchBills()">
+              <img src="assets/img/icons/search-white.svg" alt="img" />
+            </a>
+          </div>
+        </div>
+        <div class="wordset">
+          <ul>
+            <li>
+              <a id="pdfLink" data-bs-toggle="tooltip" data-bs-placement="top" title="pdf" onclick="downloadPDF()" >
+                <img src="assets/img/icons/pdf.svg" alt="img" />
+              </a>
+              
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"
+                ><img src="assets/img/icons/excel.svg" alt="img"
+              /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"
+                ><img src="assets/img/icons/printer.svg" alt="img"
+              /></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /Filter -->
+      <div class="card" id="filter_inputs">
+        <div class="card-body pb-0">
+          <div class="row">
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <div class="input-groupicon">
+                  <input
+                    type="text"
+                    class="datetimepicker cal-icon"
+                    placeholder="Choose Date"
+                  />
+                  <div class="addonset">
+                    <img src="assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <input type="text" placeholder="Enter Reference" />
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="select">
+                  <option>Choose Category</option>
+                  <option>Computers</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="select">
+                  <option>Choose Status</option>
+                  <option>Complete</option>
+                  <option>Inprogress</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+              <div class="form-group">
+                <a class="btn btn-filters ms-auto"
+                  ><img src="assets/img/icons/search-whites.svg" alt="img"
+                /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Filter -->
+      <div class="table-responsive">
+        <table class="table datanew" id="billtable">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all" />
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>Bill No:</th>
+              <th>Category</th>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bills.forEach((bill,index) => { %>
+
+            <tr>
+              <td>
+                <label class="checkboxs">
+                  <input type="checkbox" />
+                  <span class="checkmarks"></span>
+                  <%= index + 1 %>
+                </label>
+              </td>
+              <td><%= bill.billNo %></td>
+              <td><%= bill.medCategory%></td>
+              <td><%= bill.medName%></td>
+              <td><%= bill.date%></td>
+              <td><%= bill.totalPrice%></td>
+              <td>
+                <a class="me-3" href="/edit-bill?billId=<%= bill._id %>">
+                  <img src="assets/img/icons/edit.svg" alt="img" />
+                </a>
+                <a class="me-3 confirm-text" href="javascript:void(0);">
+                  <img src="assets/img/icons/delete.svg" alt="img" />
+                </a>
+                <a class="me-3" href="/bill-details?billId=<%= bill._id %>" >
+                  <img src="assets/img/icons/eye.svg" alt="img" />
+                </a>
+              </td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /product list -->
+</div>
+
+<style>
+  #modalOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10; /* Set a higher z-index for the modal overlay */
+  }
+
+  #expenseModalContainer {
+    position: fixed;
+    top: 55%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 11; /* Set a higher z-index for the modal container */
+    width: 70%;
+  }
+
+  .table-responsive {
+    z-index: 1; /* Set a lower z-index for the table so it stays below the modal */
+  }
+</style>
+
+<script>
+  // Function to open the expense modal
+  function openExpenseModal() {
+      // Show the modal overlay
+      document.getElementById('modalOverlay').style.display = 'block';
+
+      // Fetch the content of the "Expense Add" section
+      fetch('/getExpenseAddContent')
+          .then(response => response.text())
+          .then(data => {
+              // Set the content in the modal container
+              document.getElementById('expenseModalContainer').innerHTML = data;
+          })
+          .catch(error => console.error('Error fetching expense add content:', error));
+  }
+
+  // Function to close the modal
+  function closeModal() {
+      // Hide the modal overlay
+      document.getElementById('modalOverlay').style.display = 'none';
+
+      // Clear the content when the modal is closed
+      document.getElementById('expenseModalContainer').innerHTML = '';
+  }
+
+  // Event listener for the "Cancel" button in the expense modal
+  document.addEventListener('click', function (event) {
+      if (event.target.classList.contains('btn-cancel')) {
+          closeModal();
+      }
+  });
+</script>
+
+
+<script>
+ function downloadPDF() {
+    // Get the table
+    var table = document.getElementById("billtable");
+
+    // Create a new window for the PDF
+    var newWin = window.open('', 'Print-Window');
+    newWin.document.open();
+
+    // Write the necessary styles for printing
+    newWin.document.write('<html><head><style>@media print { @page { size: A4; margin: 0; } }</style></head><body>');
+
+    // Write the table header
+    newWin.document.write('<table style="border-collapse: collapse; width: 100%;"><thead><tr>');
+    newWin.document.write('<th style="border: 1px solid #000;">Bill No</th>');
+    newWin.document.write('<th style="border: 1px solid #000;">Category</th>');
+    newWin.document.write('<th style="border: 1px solid #000;">Name</th>');
+    newWin.document.write('<th style="border: 1px solid #000;">Date</th>');
+    newWin.document.write('<th style="border: 1px solid #000;">Amount</th>');
+    newWin.document.write('</tr></thead><tbody>');
+
+    // Get the table body rows
+    var tableBodyRows = table.querySelectorAll("tbody tr");
+
+    // Write the selected columns from each row with borders
+    tableBodyRows.forEach(function(row) {
+        var columns = row.querySelectorAll("td");
+        newWin.document.write('<tr>');
+        newWin.document.write('<td style="border: 1px solid #000;">' + columns[1].innerHTML + '</td>'); // Bill No
+        newWin.document.write('<td style="border: 1px solid #000;">' + columns[2].innerHTML + '</td>'); // Category
+        newWin.document.write('<td style="border: 1px solid #000;">' + columns[3].innerHTML + '</td>'); // Name
+        newWin.document.write('<td style="border: 1px solid #000;">' + columns[4].innerHTML + '</td>'); // Date
+        newWin.document.write('<td style="border: 1px solid #000;">' + columns[5].innerHTML + '</td>'); // Amount
+        newWin.document.write('</tr>');
+    });
+
+    // Close the table and body tags
+    newWin.document.write('</tbody></table>');
+
+    // Close the body and HTML tags
+    newWin.document.write('</body></html>');
+
+    // Close the document for the new window
+    newWin.document.close();
+
+    // Trigger the print function after a short delay
+    setTimeout(function () { newWin.print(); }, 10);
+}
+
+// Function to search bills by Bill No
+// Function to search bills by Bill No or Name
+function searchBills() {
+  var input, filter, table, tr, tdBillNo, tdName, i, txtBillNo, txtName;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("billtable");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows and hide those that don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    tdBillNo = tr[i].getElementsByTagName("td")[1]; // Bill No column
+    tdName = tr[i].getElementsByTagName("td")[3]; // Name column
+    if (tdBillNo && tdName) {
+      txtBillNo = tdBillNo.textContent || tdBillNo.innerText;
+      txtName = tdName.textContent || tdName.innerText;
+      // Check if the filter matches Bill No or Name
+      if (
+        txtBillNo.toUpperCase().indexOf(filter) > -1 ||
+        txtName.toUpperCase().indexOf(filter) > -1
+      ) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+
+</script>
+

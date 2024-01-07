@@ -1,0 +1,218 @@
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.rawgit.com/serratus/quaggaJS/0.12.1/dist/quagga.min.js"></script>
+<audio id="beepSound" src="assets/img/beep.mp3"></audio>
+<script>
+  $(document).ready(function () {
+    // Event listener for the "Connect Scanner" button
+    $(".btn-connect-scanner").click(function () {
+      // Remove the scanner status
+      $("#scannerStatus").remove();
+
+      // Remove the "Connect Scanner" button
+      $(".card-body2").remove();
+
+      // Show all cards
+      $(".row").show();
+      initializeScanner();
+    });
+
+    // Event listener for the search form
+    $("#searchForm").submit(function (event) {
+      event.preventDefault();
+      console.log("Form submitted");
+      var searchValue = $(".search-input").val();
+      console.log(searchValue);
+      $.ajax({
+        url: '/scan-barcode',
+        dataType: 'json',
+        contentType: 'application/json',
+        method: 'POST',
+        data: JSON.stringify({ searchValue: searchValue }),
+
+        success: function (response) {
+          updateCards(response);
+          console.log(response, "Responseeeee");
+        },
+        error: function (error) {
+          console.error('Error:', error);
+        }
+      });
+    });
+
+  });
+
+  function initializeScanner() {
+    Quagga.init({
+      inputStream: {
+        name: "Live",
+        type: "LiveStream",
+        target: document.querySelector('#scanner-container'),
+        constraints: {
+          facingMode: "environment",
+        },
+      },
+      locator: {
+        patchSize: "medium",
+        halfSample: true,
+      },
+      numOfWorkers: 2,
+      locate: true,
+      decoder: {
+        readers: ["ean_reader", "code_128_reader", "code_39_reader", "upc_reader"],
+      },
+    }, function (err) {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      Quagga.start();
+    });
+
+    // Handle scanned results
+    Quagga.onDetected(function (result) {
+      const barcodeValue = result.codeResult.code;
+      if (barcodeValue) {
+
+
+        updateCards({ productCode: barcodeValue });
+      } else {
+
+        playBeepSound();
+      }
+    });
+  }
+  function playBeepSound() {
+    var beepSound = document.getElementById("beepSound");
+    if (beepSound) {
+      beepSound.play();
+    }
+  }
+
+
+
+  function updateCards(response) {
+
+    // Hide all existing cards initially
+    $(".row .card").remove();
+
+    // Check if response is not null or undefined
+    if (response) {
+      // Create a new card
+      var cardHtml = '<div class="col-12 col-md-6 col-lg-6 d-flex">';
+      cardHtml += '<div class="card flex-fill bg-white">';
+      cardHtml += '<div class="card-body">';
+      cardHtml += '<h5 class="card-title mb-0">Product Code: ' + response.productCode + '</h5>';
+      cardHtml += '<ul class="list-group list-group-flush">';
+      cardHtml += '<li class="list-group-item"><strong>Product Description:</strong> ' + response.productDescription + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>Brand:</strong> ' + response.productBrand + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>Sub Category:</strong> ' + response.subCategory + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>Sterile OR Non-Sterile:</strong> ' + response.sterileOrNonSterile + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>Material of Construction:</strong> ' + response.materialOfConstruction + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>Product Type:</strong> ' + response.productType + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>Each/Pack:</strong> ' + response.eachPack + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>Unit of Measure (Qty):</strong> ' + response.unitOfMeasure + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>Medical Device Classification:</strong> ' + response.medicalDeviceClassification + '</li>';
+      cardHtml += '<li class="list-group-item"><strong>GS1 Code:</strong> ' + response.gs1Code + '</li>';
+      // Add other properties you want to display
+      cardHtml += '</ul>';
+      cardHtml += '</div>';
+      cardHtml += '</div>';
+      cardHtml += '</div>';
+
+      // Append the new card to the existing row
+      $(".row").append(cardHtml);
+
+      // Create an image card
+      var imageHtml = '<div class="col-12 col-md-6 col-lg-6 d-flex">';
+      imageHtml += '<div class="card flex-fill bg-white">';
+      imageHtml += '<img alt="Barcode Image" src="assets/barcode/' + response.barcodeImage + '" class="card-img-top">';
+      imageHtml += '</div>';
+      imageHtml += '</div>';
+
+      // Append the image card to the existing row
+      $(".row").append(imageHtml);
+    }
+    else {
+        Swal.fire({
+            icon: 'warning',
+            title: 'No Data',
+            text: 'There is no data to display.',
+        });
+    }
+  }
+
+</script>
+
+<div class="content">
+  <div class="page-header">
+    <div class="page-title">
+      <h4>Barcode Scanner</h4>
+    </div>
+  </div>
+
+  <!-- Scanner Connection Status -->
+  <div id="scannerStatus" class="alert alert-warning large-text">
+    Please connect the scanner!
+  </div>
+
+  <form id="searchForm" method="post" action="#">
+    <div class="searchinputs">
+      <input type="text" class="search-input" placeholder="Search by Product Code or Barcode">
+      <div class="search-addon">
+        <span><button style="border: none; background: transparent;" type="submit"><i data-feather="search"
+              class="feather-36"></i></button></span>
+      </div>
+    </div>
+  </form>
+  <!-- Product List -->
+  <div class="card">
+    <div class="card-body2">
+      <!-- Your existing content goes here -->
+
+      <!-- Scanner Connection Button -->
+      <button type="button" class="btn btn-success btn-sm btn-connect-scanner">Connect Scanner</button>
+    </div>
+  </div>
+
+  <!-- Product List -->
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-6 d-flex">
+      <div class="card flex-fill bg-white">
+        <div class="card-body">
+          <!-- Your existing content goes here -->
+          <h5 class="card-title mb-0">Product Code: </h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">Product Descrition</li>
+            <li class="list-group-item">Product Brand</li>
+            <li class="list-group-item">Sub Category</li>
+            <li class="list-group-item">Sterile OR Non-Sterile</li>
+            <li class="list-group-item">Meterial of Construct</li>
+            <li class="list-group-item">Product Type</li>
+            <li class="list-group-item">Each/Pack</li>
+            <li class="list-group-item">Unit of Measure (Qty)</li>
+            <li class="list-group-item">Medical Device Classification</li>
+            <li class="list-group-item">GS1 Code</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-6 d-flex">
+      <div class="card flex-fill bg-white">
+        <img alt="Barcode Image" src="assets/barcode/' + response.barcodeImage + '" class="card-img-top">
+
+      </div>
+    </div>
+  </div>
+  <style>
+    .card-body1 {
+      padding-top: 20px;
+      padding-left: 10px;
+      /* Adjust the value as needed */
+    }
+
+    .searchinputs {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+  <!-- /Main Wrapper -->

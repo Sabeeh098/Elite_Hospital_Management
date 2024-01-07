@@ -1,0 +1,264 @@
+<div class="content">
+  <div class="page-header">
+
+    <div class="page-title">
+      <h4>Medicines</h4>
+    </div>
+    <div class="page-btn d-flex justify-content-between">
+      <!-- Add new Medicine button -->
+      <a href="javascript:void(0);" onclick="openExpenseModal()" class="btn btn-added">
+        <img src="assets/img/icons/plus.svg" class="me-2" alt="img" />
+        Add new Medicine
+      </a>
+
+      <!-- Spacer for some space between buttons -->
+      <div class="flex-grow-1"></div>
+
+      <!-- Import Medicine button with left margin -->
+      <!-- <a href="javascript:void(0);" onclick="openImportModal()" class="btn btn-added ms-2">
+        <i class="ti-import me-2" data-bs-toggle="tooltip" title="Import Medicine"></i>
+        Import Medicine
+      </a> -->
+      <a href="#" class="btn btn-added ms-2" data-bs-toggle="modal" data-bs-target="#create">
+        <i class="ti-import me-2" data-bs-toggle="tooltip" title="Import Medicine"></i>
+        Import Medicine
+      </a>
+    </div>
+    <div class="modal fade" id="create" tabindex="-1" aria-labelledby="create" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title">Create</h5>
+                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <form action='/import-medicine' method="POST" enctype="multipart/form-data">
+                      <div class="form-group">
+                          <label for="csvFile">Add CSV File</label>
+                          <input type="file" id="csvFile" name="csvFile" class="form-control" accept=".csv">
+                          <small class="text-muted">Please upload a CSV file.</small>
+                      </div>
+  
+                      <div class="col-lg-12">
+                          <button type="submit" class="btn btn-submit me-2">Submit</button>
+                          <button type="button" class="btn btn-cancel" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+    
+
+  </div>
+
+  <div id="modalOverlay"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 4;">
+    <!-- Container for the modal content -->
+    <div id="expenseModalContainer"
+      style="position: fixed; top: 55%; left: 60%; transform: translate(-50%, -50%); background: #fff; padding: 20px; border-radius: 5px; z-index: 2; width: 78%;">
+    </div>
+  </div>
+
+  <!-- /product list -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-top">
+        <div class="search-set">
+          <div class="search-path">
+            <a class="btn btn-filter" id="filter_search">
+              <img src="assets/img/icons/filter.svg" alt="img" />
+              <span><img src="assets/img/icons/closes.svg" alt="img" /></span>
+            </a>
+
+          </div>
+          <div class="search-input">
+            <a class="btn btn-searchset">
+              <img src="assets/img/icons/search-white.svg" alt="img" />
+            </a>
+
+
+          </div>
+        </div>
+        <div class="wordset">
+          <ul>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="pdf"><img src="assets/img/icons/pdf.svg"
+                  alt="img" /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="excel"><img src="assets/img/icons/excel.svg"
+                  alt="img" /></a>
+            </li>
+            <li>
+              <a data-bs-toggle="tooltip" data-bs-placement="top" title="print"><img src="assets/img/icons/printer.svg"
+                  alt="img" /></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- /Filter -->
+      <div class="card" id="filter_inputs">
+        <div class="card-body pb-0">
+          <div class="row">
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <div class="input-groupicon">
+                  <input type="text" class="datetimepicker cal-icon" placeholder="Choose Date" />
+                  <div class="addonset">
+                    <img src="assets/img/icons/calendars.svg" alt="img" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <input type="text" placeholder="Enter Reference" />
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="select">
+                  <option>Choose Category</option>
+                  <option>Computers</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-2 col-sm-6 col-12">
+              <div class="form-group">
+                <select class="select">
+                  <option>Choose Status</option>
+                  <option>Complete</option>
+                  <option>Inprogress</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-1 col-sm-6 col-12 ms-auto">
+              <div class="form-group">
+                <a class="btn btn-filters ms-auto"><img src="assets/img/icons/search-whites.svg" alt="img" /></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /Filter -->
+      <div class="table-responsive">
+        <table class="table datanew">
+          <thead>
+            <tr>
+              <th>
+                <label class="checkboxs">
+                  <input type="checkbox" id="select-all" />
+                  <span class="checkmarks"></span>
+                </label>
+              </th>
+              <th>Medicine name</th>
+              <th>Category</th>
+              <th>Company</th>
+              <th>Description</th>
+              <th>Amount</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% medicines.forEach((medicine,index)=> { %>
+              <tr>
+                <td>
+                  <label class="checkboxs">
+                    <input type="checkbox" />
+                    <span class="checkmarks"></span>
+                    <%= index + 1 %>
+                  </label>
+                </td>
+                <td>
+                  <%= medicine.medName%>
+                </td>
+                <td>
+                  <%= medicine.medCategory%>
+                </td>
+                <td>
+                  <%= medicine.medCompany %>
+                </td>
+                <td>
+                  <%= medicine.medDescription%>
+                </td>
+                <td>
+                  <%= medicine.medPrice%>
+                </td>
+                <td>
+                  <a class="me-3" href="/edit-medicine?medicineId=<%= medicine._id %>">
+                    <img src="assets/img/icons/edit.svg" alt="img" />
+                  </a>
+                  <a class="me-3 confirm-text" href="javascript:void(0);" data-medicine-id="<%= medicine._id %>" onclick="deleteMedicine(this)">
+                    <img src="assets/img/icons/delete.svg" alt="img" />
+                  </a>
+                </td>
+              </tr>
+              <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- /product list -->
+</div>
+
+<script>
+  // Function to open the expense modal
+  function openExpenseModal() {
+    // Show the modal overlay
+    document.getElementById('modalOverlay').style.display = 'block';
+
+    // Fetch the content of the "Expense Add" section
+    fetch('/getMedicineAdd')
+      .then(response => response.text())
+      .then(data => {
+        // Set the content in the modal container
+        document.getElementById('expenseModalContainer').innerHTML = data;
+      })
+      .catch(error => console.error('Error fetching expense add content:', error));
+  }
+
+  // Function to close the modal
+  function closeModal() {
+    // Hide the modal overlay
+    document.getElementById('modalOverlay').style.display = 'none';
+
+    // Clear the content when the modal is closed
+    document.getElementById('expenseModalContainer').innerHTML = '';
+
+  }
+
+  // Event listener for the "Cancel" button in the expense modal
+  document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('btn-cancel')) {
+      closeModal();
+    }
+  });
+ 
+  function deleteMedicine(button) {
+    // Extract medicine ID from the data attribute
+    const medicineId = $(button).data('medicine-id');
+
+    // Make an AJAX request to delete the medicine
+    $.ajax({
+      url: `/delete-medicine?id=${medicineId}`, // Update the URL as needed
+      type: 'DELETE',
+      success: function(response) {
+        // Handle success response, e.g., remove the deleted medicine from the UI
+        console.log('Medicine deleted successfully');
+        // Optionally, you may want to remove the deleted medicine from the UI
+        $(button).closest('tr').remove();
+      },
+      error: function(error) {
+        // Handle error response
+        console.error('Error deleting medicine:', error);
+        // Optionally, display an error message to the user
+        alert('Error deleting medicine. Please try again.');
+      }
+    });
+  }
+
+</script>
