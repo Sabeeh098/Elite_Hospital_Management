@@ -254,8 +254,11 @@ const nurse = {
 
     editPatientNurse : async (req,res) => {
       try {
-        const { patientId, nurseId, description, operationSide, operationJoint, femurProsthesisSize, tibialSize, plasticInsertSize, patellaSize, patientRequirements } = req.body;
+        const { patientId, nurseId, description, operationSide, operationJoint,  leftFemurProsthesisSize,
+          rightFemurProsthesisSize, leftTibialSize,rightTibialSize, plasticInsertSize, patellaSize, patientRequirements } = req.body;
     
+        const tibialSize = [...leftTibialSize, ...rightTibialSize];
+        const femurProsthesisSize = [...leftFemurProsthesisSize, ...rightFemurProsthesisSize];
         
         const requirementsArray = Array.isArray(req.body.patientRequirements)
         ? req.body.patientRequirements

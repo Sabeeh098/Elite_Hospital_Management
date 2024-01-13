@@ -43,15 +43,15 @@ const patientSchema = new mongoose.Schema({
    
   },
   femurProsthesisSize: {
-    type: String,
-   
-  },
+    type: [String], 
+
+},
   tibialSize: {
-    type: String,
+    type: [String], 
   
   },
   plasticInsertSize: {
-    type: String,
+    type: [String], 
    
   },
   patellaSize: {

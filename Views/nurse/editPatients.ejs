@@ -63,47 +63,134 @@
                 </div>
 
                 <div class="row">
+                   
+                
                     <div class="col-lg-6 mb-3">
                         <label>Surgeon Recommended Femoral Prosthesis Size (Left)</label>
-                        <select class="form-control" name="femurProsthesisSize">
-                            <% if (dataAfterKeyword.left) { %>
-                                <% dataAfterKeyword.left.forEach(option => { %>
-                                    <option value="<%= option %>"><%= option %></option>
-                                <% }); %>
-                            <% } %>
+                        <select class="form-control" name="leftFemurProsthesisSize">
+                            <option value="LF1">LF1</option>
+                            <option value="LF2">LF2</option>
+                            <option value="LF3">LF3</option>
+                            <option value="LF4">LF4</option>
+                            <option value="LF5">LF5</option>
+                            <option value="LF6">LF6</option>
+                            <option value="LF7">LF7</option>
+                            <option value="LF8">LF8</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-6 mb-3">
+                        <label>Surgeon Recommended Femoral Prosthesis Size (Right)</label>
+                        <select class="form-control" name="rightFemurProsthesisSize">
+                            <option value="RF1">RF1</option>
+                            <option value="RF2">RF2</option>
+                            <option value="RF3">RF3</option>
+                            <option value="RF4">RF4</option>
+                            <option value="RF5">RF5</option>
+                            <option value="RF6">RF6</option>
+                            <option value="RF7">RF7</option>
+                            <option value="RF8">RF8</option>
+                        </select>
+                    </div>
+                   
+                
+                    <div class="col-lg-6 mb-3">
+                        <label>Surgeon Recommended Tibial Size (Left)</label>
+                        <select class="form-control" name="leftTibialSize">
+                            <option value="LT1">LT1</option>
+                            <option value="LT2">LT2</option>
+                            <option value="LT3">LT3</option>
+                            <option value="LT6">LT6</option>
+                            <option value="LT6+">LT6+</option>
+                            <option value="LT7">LT7</option>
+                            <option value="LT8">LT8</option>
+                            <option value="LT8+">LT8+</option>
                         </select>
                     </div>
                     <div class="col-lg-6 mb-3">
                         <label>Surgeon Recommended Tibial Size (Right)</label>
-                        <select class="form-control" name="tibialSize">
-                            <% if (dataAfterKeyword.right) { %>
-                                <% dataAfterKeyword.right.forEach(option => { %>
-                                    <option value="<%= option %>"><%= option %></option>
-                                <% }); %>
-                            <% } %>
+                        <select class="form-control" name="rightTibialSize">
+                            <option value="RT1">RT1</option>
+                            <option value="RT2">RT2</option>
+                            <option value="RT3">RT3</option>
+                            <option value="RT6">RT6</option>
+                            <option value="RT6+">RT6+</option>
+                            <option value="RT7">RT7</option>
+                            <option value="RT8">RT8</option>
+                            <option value="RT8+">RT8+</option>
                         </select>
                     </div>
                     <div class="col-lg-6 mb-3">
-                        <label>Surgeon Recommended Plastic Insert Size (Left)</label>
+                        <label>Surgeon Recommended Plastic Insert Size</label>
                         <select class="form-control" name="plasticInsertSize">
-                            <% if (dataAfterKeyword.left) { %>
-                                <% dataAfterKeyword.left.forEach(option => { %>
-                                    <option value="<%= option %>"><%= option %></option>
-                                <% }); %>
-                            <% } %>
+                            <option value="1x10">1x10</option>
+                            <option value="1x12">1x12</option>
+                            <option value="1x14">1x14</option>
+                            <option value="1x17">1x17</option>
+                
+                            <option value="2x10">2x10</option>
+                            <option value="2x12">2x12</option>
+                            <option value="2x14">2x14</option>
+                            <option value="2x17">2x17</option>
+                
+                            <option value="3x10">3x10</option>
+                            <option value="3x12">3x12</option>
+                            <option value="3x14">3x14</option>
+                            <option value="3x17">3x17</option>
+                
+                            <option value="2+x10">2+ x10</option>
+                            <option value="2+x12">2+ x12</option>
+                            <option value="2+x14">2+ x14</option>
+                            <option value="2+x17">2+ x17</option>
+                
+                            <option value="4x10">4x10</option>
+                            <option value="4x12">4x12</option>
+                            <option value="4x14">4x14</option>
+                            <option value="4x17">4x17</option>
+                
+                            <option value="5x10">5x10</option>
+                            <option value="5x12">5x12</option>
+                            <option value="5x14">5x14</option>
+                            <option value="5x17">5x17</option>
+                
+                            <option value="3+x10">3+ x10</option>
+                            <option value="3+x12">3+ x12</option>
+                            <option value="3+x14">3+ x14</option>
+                            <option value="3+x17">3+ x17</option>
+                
+                            <option value="5+x10">5+ x10</option>
+                            <option value="5+x12">5+ x12</option>
+                            <option value="5+x14">5+ x14</option>
+                            <option value="5+x17">5+ x17</option>
+                
+                            <option value="7x10">7x10</option>
+                            <option value="7x12">7x12</option>
+                            <option value="7x14">7x14</option>
+                            <option value="7x17">7x17</option>
+                
+                            <option value="6+x10">6+ x10</option>
+                            <option value="6+x12">6+ x12</option>
+                            <option value="6+x14">6+ x14</option>
+                            <option value="6+x17">6+ x17</option>
+                
+                            <option value="8x10">8x10</option>
+                            <option value="8x12">8x12</option>
+                            <option value="8x14">8x14</option>
+                            <option value="8x17">8x17</option>
+                
+                            <option value="7+x10">7+ x10</option>
+                            <option value="7+x12">7+ x12</option>
+                            <option value="7+x14">7+ x14</option>
+                            <option value="7+x17">7+ x17</option>
                         </select>
                     </div>
+                
                     <div class="col-lg-6 mb-3">
-                        <label>Surgeon Recommended Patella Size (Right)</label>
-                        <select class="form-control" name="patellaSize">
-                            <% if (dataAfterKeyword.right) { %>
-                                <% dataAfterKeyword.right.forEach(option => { %>
-                                    <option value="<%= option %>"><%= option %></option>
-                                <% }); %>
-                            <% } %>
-                        </select>
+                        <label>Surgeon Recommended Patella Size</label>
+                        <!-- Use input instead of select for free text entry -->
+                        <input type="text" class="form-control" name="patellaSize" placeholder="Enter Patella Size">
                     </div>
                 </div>
+                
 
                 <div class="mb-3">
                     <h4 class="my-1 d-inline-block">Patient Requirement For OT Description</h4>

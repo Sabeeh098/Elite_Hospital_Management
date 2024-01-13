@@ -144,12 +144,16 @@ const doctors = {
         discription,
         operationSide,
         operationJoint,
-        femurProsthesisSize,
-        tibialSize,
+        leftFemurProsthesisSize,
+        rightFemurProsthesisSize,
+        leftTibialSize,
+        rightTibialSize,
         plasticInsertSize,
         patellaSize,
       } = req.body;
 
+      const tibialSize = [...leftTibialSize, ...rightTibialSize];
+      const femurProsthesisSize = [...leftFemurProsthesisSize, ...rightFemurProsthesisSize];
       const requirementsArray = Array.isArray(req.body.patientRequirements)
         ? req.body.patientRequirements
         : [req.body.patientRequirements];
